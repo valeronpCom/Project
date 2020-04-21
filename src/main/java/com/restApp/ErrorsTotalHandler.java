@@ -24,6 +24,7 @@ public class ErrorsTotalHandler {
         }
         ErrorsPlace error = new ErrorsPlace(500, HttpStatus.INTERNAL_SERVER_ERROR, "Unable to run");
         return new ResponseEntity<>(error, HttpStatus.OK);
+
     }
 
 }

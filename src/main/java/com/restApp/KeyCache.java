@@ -1,7 +1,8 @@
 package com.restApp;
 
 import org.springframework.stereotype.Component;
-import java.util.*;
+import java.util.Map;
+import java.util.HashMap;
 
 @Component
 public class KeyCache {
@@ -11,6 +12,7 @@ public class KeyCache {
     public KeyCache(){
         cache = new HashMap<>();
     }
+
     public boolean checkForExistingInCache(Integer number){
         return cache.containsKey(number);
     }

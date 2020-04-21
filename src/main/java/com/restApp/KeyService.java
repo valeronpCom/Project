@@ -3,6 +3,7 @@ package com.restApp;
 import java.util.Random;
 
 public class KeyService {
+
     private static Random random = new Random();
     private static int keyNumber = 1 + random.nextInt( 5 - 1 + 1);
     private Integer guessedNumber;
@@ -10,6 +11,7 @@ public class KeyService {
     public KeyService(Integer number) {
         this.guessedNumber = number;
     }
+
     public String checkNumber() {
         String answer = " ";
         if (guessedNumber < keyNumber) {
@@ -23,6 +25,7 @@ public class KeyService {
         }
         return answer;
     }
+
     public Integer getGuessedNumber() {
         return guessedNumber;
     }
@@ -30,4 +33,5 @@ public class KeyService {
     public void setGuessedNumber(Integer guessedNumber){
         this.guessedNumber = guessedNumber;
     }
+
 }

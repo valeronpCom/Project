@@ -1,6 +1,7 @@
 package com.restApp;
 
 public class KeyResponse {
+
     private String answerOfGuessing;
 
     public KeyResponse(){};
@@ -12,7 +13,9 @@ public class KeyResponse {
     public String getAnswerOfGuessing() {
         return answerOfGuessing;
     }
+
     public void setAnswerOfGuessing(String answerOfGuessing) {
         this.answerOfGuessing = answerOfGuessing;
     }
+
 }

@@ -3,6 +3,7 @@ package com.restApp;
 import org.springframework.http.HttpStatus;
 
 public class ErrorsPlace {
+
     private int errorCode;
     private HttpStatus status;
     private String message;
@@ -24,4 +25,5 @@ public class ErrorsPlace {
     public String getMessage() {
         return message;
     }
+
 }

@@ -4,6 +4,7 @@ import Exceptions.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,12 @@ public class KeyController {
     @Autowired
     private KeyCache keyCache;
 
+    @Autowired
+    private Counter counter;
+
     @GetMapping("/beginning")
     public KeyResponse beginning(@RequestParam(value = "number") Integer number) throws BadRequestException, InternalException {
+        counter.increaseCounter();
         logger.info("Check entered data");
         if(number == null){
             logger.error("Parameters were not entered correctly or were not entered at all.");
@@ -38,4 +43,10 @@ public class KeyController {
         keyCache.setValue(number, response);
         return response;
     }
+
+    @RequestMapping("/counter")
+    public Counter getCounter(){
+        return counter;
+    }
+
 }
