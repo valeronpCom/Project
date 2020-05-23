@@ -1,13 +1,13 @@
-package Exceptions;
+package com.restApp.Exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-public class InternalException extends Exception {
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+public class BadRequestException extends Exception{
     private int exceptionCode;
 
-    public InternalException(int exceptionCode, String message) {
+    public BadRequestException(int exceptionCode, String message){
         super(message);
         this.exceptionCode = exceptionCode;
     }

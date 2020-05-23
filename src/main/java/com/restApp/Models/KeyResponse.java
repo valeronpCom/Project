@@ -1,4 +1,4 @@
-package com.restApp;
+package com.restApp.Models;
 
 public class KeyResponse {
 

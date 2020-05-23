@@ -1,4 +1,6 @@
-package com.restApp;
+package com.restApp.Services;
+
+import com.restApp.Models.Comparator;
 
 import java.util.ArrayList;
 import java.util.List;

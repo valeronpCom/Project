@@ -1,5 +1,6 @@
-package com.restApp;
+package com.restApp.Services;
 
+import com.restApp.Models.KeyResponse;
 import org.springframework.stereotype.Component;
 import java.util.Map;
 import java.util.HashMap;
@@ -7,7 +8,7 @@ import java.util.HashMap;
 @Component
 public class KeyCache {
 
-    Map<Integer,KeyResponse> cache;
+    Map<Integer, KeyResponse> cache;
 
     public KeyCache(){
         cache = new HashMap<>();

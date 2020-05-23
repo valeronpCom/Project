@@ -1,4 +1,4 @@
-package com.restApp;
+package com.restApp.Exceptions;
 
 import org.springframework.http.HttpStatus;
 

@@ -1,5 +1,6 @@
-package com.restApp;
+package com.restApp.tests;
 
+import com.restApp.Services.KeyService;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
