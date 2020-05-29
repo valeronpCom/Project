@@ -1,17 +1,17 @@
 package com.restApp.Models;
 
 public class PostRequest {
-    String number;
+    Integer number;
 
-    public String getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(String number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 
-    public PostRequest(String number) {
+    public PostRequest(Integer number) {
         this.number = number;
     }
 
