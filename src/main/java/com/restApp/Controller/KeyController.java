@@ -1,48 +1,62 @@
 package com.restApp.Controller;
 
-import com.restApp.Models.*;
+import com.restApp.Models.KeyResponse;
+import com.restApp.Models.PostRequestList;
+import com.restApp.Models.Request;
+import com.restApp.Models.Statistics;
 import com.restApp.Repository.RequestRepository;
+import com.restApp.Repository.StatisticsRepository;
 import com.restApp.Services.Counter;
 import com.restApp.Services.KeyCache;
 import com.restApp.Services.KeyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 
 public class KeyController {
 
-    Statistics statistics = new Statistics();
-
     static KeyResponse response = new KeyResponse();
-
+    List<Integer> list = new ArrayList<>();
     @Autowired
     RequestRepository requestRepository;
+
+    @Autowired
+    StatisticsRepository statisticsRepository;
 
     @Autowired
     private KeyCache keyCache;
 
     @Autowired
     private Counter counter;
-
+    @Async("threadPoolTaskExecutor")
     @PostMapping("/beginning")
-    public Statistics create(@RequestBody PostRequestList requestList)  {
+    public CompletableFuture<Integer> create(@RequestBody PostRequestList requestList)  {
+        counter.increaseCounter();
+        Statistics statistics = new Statistics();
+        statistics.setProcessId(counter.getCounter());
+        CompletableFuture.runAsync(() -> {
+            requestList.getRequests().stream().forEach(request -> {
+                Integer number = request.getNumber();
+                list.add(number);
+                statistics.update(list);
+                Request newRequest = new Request();
+                newRequest.setNumber(number);
+                KeyService service = new KeyService(number);
+                response.setAnswerOfGuessing(service.checkNumber());
+                newRequest.setAnswer(service.checkNumber());
+                requestRepository.save(newRequest);
+                keyCache.setValue(number, response);
 
-        requestList.getRequests().stream().forEach(request -> {
-            counter.increaseCounter();
-            Integer number = request.getNumber();
-            statistics.getResponse().add(number);
-            statistics.update();
-            Request newRequest = new Request();
-            newRequest.setNumber(number);
-            KeyService service = new KeyService(number);
-            response.setAnswerOfGuessing(service.checkNumber());
-            newRequest.setAnswer(service.checkNumber());
-            requestRepository.save(newRequest);
-            keyCache.setValue(number, response);
-
+           });
+        statisticsRepository.save(statistics);
         });
-        return statistics;
+    return CompletableFuture.completedFuture(statistics.getProcessId());
 }
 
     @GetMapping("/all")
@@ -55,8 +69,9 @@ public class KeyController {
         return counter;
     }
 
-    @RequestMapping("/statistics")
-    public Statistics getStatistics() {
+    @GetMapping(value = "/getStatistics/{processId}")
+    public @ResponseBody Statistics getResponseByProcessId(@PathVariable("processId")Integer processId)  {
+        Statistics statistics = statisticsRepository.findByProcessId(processId);
         return statistics;
     }
 }
