@@ -39,7 +39,7 @@ public class KeyController {
     public CompletableFuture<Integer> create(@RequestBody PostRequestList requestList)  {
         counter.increaseCounter();
         Statistics statistics = new Statistics();
-        statistics.setProcessId(counter.getCounter());
+        //statistics.setProcessId(counter.getCounter());
         CompletableFuture.runAsync(() -> {
             requestList.getRequests().stream().forEach(request -> {
                 Integer number = request.getNumber();
@@ -56,7 +56,7 @@ public class KeyController {
            });
         statisticsRepository.save(statistics);
         });
-    return CompletableFuture.completedFuture(statistics.getProcessId());
+    return CompletableFuture.completedFuture(statistics.getId());
 }
 
     @GetMapping("/all")
@@ -69,9 +69,9 @@ public class KeyController {
         return counter;
     }
 
-    @GetMapping(value = "/getStatistics/{processId}")
-    public @ResponseBody Statistics getResponseByProcessId(@PathVariable("processId")Integer processId)  {
-        Statistics statistics = statisticsRepository.findByProcessId(processId);
+    @GetMapping(value = "/getStatistics/{Id}")
+    public @ResponseBody Statistics getResponseByProcessId(@PathVariable("Id")Integer Id)  {
+        Statistics statistics = statisticsRepository.findById(Id);
         return statistics;
     }
 }

@@ -11,9 +11,6 @@ public class Statistics {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "process_id")
-    private Integer processId;
-
     @Column(name = "total_count")
     private Integer amount;
 
@@ -32,14 +29,6 @@ public class Statistics {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Integer getProcessId() {
-        return processId;
-    }
-
-    public void setProcessId(Integer processId) {
-        this.processId = processId;
     }
 
     public Integer getAmount() {
